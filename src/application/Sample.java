@@ -1,24 +1,16 @@
 package application;
 
 public class Sample {
-	//private Calendar submission_date;
-	private int day;
-	private int month;
-	private int year;
 	private int sample_id;
 	private String test_result = "Pending";
 	private int patient_id;
 	
-	public Sample(int sample_id, int patient_id) {
+	public Sample(int patient_id) {
 		// Creates sample object with sample ID and patient ID
-		this.sample_id = sample_id;
+		String sample_info_path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project\\sample_info.csv";
+		CSV_Module csv = new CSV_Module();
+		sample_id = csv.generateSampleID(sample_info_path);
 		this.patient_id = patient_id;
-	}
-	
-	public void setSubmissionDate (int year, int month, int day) {
-		this.year = year;
-		this.month = month;
-		this.day = day;
 	}
 	
 	public void updateResult(String test_result) {
@@ -35,10 +27,6 @@ public class Sample {
 	
 	public String getSampleResult() {
 		return test_result;
-	}
-	
-	public String getSubmissionDate() {
-		return month + "/" + day + "/" + year;
 	}
 	
 }

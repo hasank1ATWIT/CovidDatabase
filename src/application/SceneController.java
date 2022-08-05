@@ -3,6 +3,8 @@ package application;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +29,7 @@ public class SceneController {
 	private Parent root;
 	
 	@FXML
-	TextField firstName, lastName, firstNameC, lastNameC, emailC, phoneC, cityC, stateC;
+	TextField firstName, lastName, firstNameC, lastNameC, emailC, phoneC, cityC, stateC, patientIDS, sampleResultS, patientID_SampleCreation;
 	
 	@FXML
 	Label first_name;
@@ -86,6 +88,10 @@ public class SceneController {
 			}
 		}
 		
+		if(relavant_patients.size() < 1) {
+			JOptionPane.showMessageDialog(null, "No Patients with that name");
+		}
+		
 		csv.addPatientToPatientResults(patient_results_path, relavant_patients);
 		
 		root = FXMLLoader.load(getClass().getResource("Scene2.fxml"));
@@ -116,12 +122,11 @@ public class SceneController {
 			for(int i=0; i<all_samples.size(); i++) {
 				String sample_string = all_samples.get(i);
 				String[] sample_details = sample_string.split(", ");
-				if(sample_details[2].equals(patient_details[2])) { // If patient ID from sample array list equals relevant patient ID
-					test_result.setText(sample_details[3]); // Then set test result to such and such
+				if(Integer.parseInt(sample_details[1]) == Integer.parseInt(patient_details[2])) { // If patient ID from sample array list equals relevant patient ID
+					test_result.setText(sample_details[2]); // Then set test result to such and such
 					break;
 				} else {
 					test_result.setText("No Test on Record");
-					break;
 				}
 			}
 			
@@ -166,4 +171,42 @@ public class SceneController {
 		}
 
 	}
+	
+	public void updateSampleButton(ActionEvent event) throws IOException {
+		// Goes to scene for updating sample status
+		root = FXMLLoader.load(getClass().getResource("updateSampleScene.fxml"));
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+		
+	}
+	
+	
+	public void updateSample(ActionEvent event) throws IOException {
+		// Updates the sample
+		CSV_Module csv = new CSV_Module();
+		if((patientIDS != null) & (sampleResultS != null)) {
+			csv.updateSample(sample_info_path, Integer.parseInt(patientIDS.getText()), sampleResultS.getText());
+		}
+	}
+	
+	public void createSample(ActionEvent event) throws IOException {
+		// Goes to scene for creating a sample
+		root = FXMLLoader.load(getClass().getResource("createSampleScene.fxml"));
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
+	
+	public void createSampleButton(ActionEvent event) throws IOException {
+		// Creates a new sample
+		CSV_Module csv = new CSV_Module();
+		if((patientID_SampleCreation != null) && !patientID_SampleCreation.getText().equals("")) {
+			Sample a1 = new Sample(Integer.parseInt(patientID_SampleCreation.getText()));
+			csv.addSample(sample_info_path, a1);
+		}
+	}
+	
 }

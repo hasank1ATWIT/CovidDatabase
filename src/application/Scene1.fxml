@@ -19,5 +19,7 @@
       <Label layoutX="37.0" layoutY="58.0" text="First Name" />
       <Label layoutX="37.0" layoutY="116.0" text="Last Name" />
       <Button layoutX="355.0" layoutY="63.0" mnemonicParsing="false" onAction="#createPatientButton" text="Create Patient" />
+      <Button layoutX="352.0" layoutY="103.0" mnemonicParsing="false" onAction="#updateSampleButton" text="Update Sample" />
+      <Button layoutX="354.0" layoutY="141.0" mnemonicParsing="false" onAction="#createSample" text="Create Sample" />
    </children>
 </AnchorPane>
