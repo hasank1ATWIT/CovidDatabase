@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SceneController">
+   <children>
+      <Label layoutX="257.0" layoutY="9.0" text="Patient">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button layoutX="209.0" layoutY="349.0" mnemonicParsing="false" onAction="#switchToScene1" text="Return to the Main Screen">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="27.0" layoutY="49.0" text="First Name" />
+      <Label layoutX="27.0" layoutY="103.0" text="Last Name" />
+      <Label layoutX="27.0" layoutY="153.0" text="Patient ID" />
+      <Label layoutX="257.0" layoutY="49.0" text="Email" />
+      <Label layoutX="257.0" layoutY="103.0" text="Phone Number" />
+      <Label layoutX="257.0" layoutY="153.0" text="City" />
+      <Label layoutX="426.0" layoutY="49.0" text="State" />
+      <Label layoutX="426.0" layoutY="103.0" text="Latest Test Result" />
+      <Label fx:id="first_name" layoutX="27.0" layoutY="74.0" />
+      <Button layoutX="259.0" layoutY="306.0" mnemonicParsing="false" onAction="#loadPatientButton" text="Load Patient" />
+      <Label fx:id="last_name" layoutX="27.0" layoutY="128.0" />
+      <Label fx:id="patient_id" layoutX="27.0" layoutY="183.0" />
+      <Label fx:id="email" layoutX="257.0" layoutY="74.0" />
+      <Label fx:id="phone_number" layoutX="257.0" layoutY="120.0" />
+      <Label fx:id="city" layoutX="257.0" layoutY="175.0" />
+      <Label fx:id="state" layoutX="426.0" layoutY="65.0" />
+      <Label fx:id="test_result" layoutX="426.0" layoutY="128.0" />
+      <Label fx:id="OtherPatients" layoutX="39.0" layoutY="236.0" />
+   </children>
+</AnchorPane>
