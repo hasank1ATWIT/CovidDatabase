@@ -2,11 +2,11 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SceneController">
    <children>
@@ -15,10 +15,14 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="patientID_SampleCreation" layoutX="225.0" layoutY="126.0" />
-      <Label layoutX="276.0" layoutY="100.0" text="Patient ID" />
+      <TextField fx:id="patientID_SampleCreation" layoutX="150.0" layoutY="124.0" />
+      <Label layoutX="199.0" layoutY="99.0" text="Patient ID" />
       <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="255.0" layoutY="174.0" mnemonicParsing="false" onAction="#createSampleButton" text="Create Sample" />
-      <Button layoutX="235.0" layoutY="222.0" mnemonicParsing="false" onAction="#switchToScene1" text="Return to Main Screen" />
+      <Button layoutX="255.0" layoutY="213.0" mnemonicParsing="false" onAction="#createSampleButton" text="Create Sample" />
+      <Button layoutX="234.0" layoutY="252.0" mnemonicParsing="false" onAction="#switchToScene1" text="Return to Main Screen" />
+      <Label layoutX="345.0" layoutY="99.0" text="Sample Type" />
+      <RadioButton fx:id="NasalSwab" layoutX="336.0" layoutY="128.0" mnemonicParsing="false" text="Nasal Swab" />
+      <RadioButton fx:id="SelfTest" layoutX="336.0" layoutY="156.0" mnemonicParsing="false" text="Self Test" />
+      <RadioButton fx:id="Other" layoutX="336.0" layoutY="182.0" mnemonicParsing="false" text="Other" />
    </children>
 </AnchorPane>

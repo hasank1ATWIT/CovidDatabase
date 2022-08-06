@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -30,6 +31,9 @@ public class SceneController {
 	
 	@FXML
 	TextField firstName, lastName, firstNameC, lastNameC, emailC, phoneC, cityC, stateC, patientIDS, sampleResultS, patientID_SampleCreation;
+	
+	@FXML
+	RadioButton NasalSwab, SelfTest, Other;
 	
 	@FXML
 	Label first_name;
@@ -57,6 +61,9 @@ public class SceneController {
 	
 	@FXML
 	Label OtherPatients;
+	
+	@FXML
+	Label test_type;
 	
 	
 	public void switchToScene1(ActionEvent event) throws IOException {
@@ -124,6 +131,7 @@ public class SceneController {
 				String[] sample_details = sample_string.split(", ");
 				if(Integer.parseInt(sample_details[1]) == Integer.parseInt(patient_details[2])) { // If patient ID from sample array list equals relevant patient ID
 					test_result.setText(sample_details[2]); // Then set test result to such and such
+					test_type.setText(sample_details[3]);
 					break;
 				} else {
 					test_result.setText("No Test on Record");
@@ -201,12 +209,26 @@ public class SceneController {
 	}
 	
 	public void createSampleButton(ActionEvent event) throws IOException {
-		// Creates a new sample
+		// Creates a new sample with patient ID and sample type as inputs
 		CSV_Module csv = new CSV_Module();
-		if((patientID_SampleCreation != null) && !patientID_SampleCreation.getText().equals("")) {
-			Sample a1 = new Sample(Integer.parseInt(patientID_SampleCreation.getText()));
-			csv.addSample(sample_info_path, a1);
+		
+		if((NasalSwab.isSelected()) && (patientID_SampleCreation != null) && !patientID_SampleCreation.getText().equals("")) {
+			NasalSwabSampleType a1 = new NasalSwabSampleType();
+			a1.generateSampleID();
+			a1.setPatientID(Integer.parseInt(patientID_SampleCreation.getText()));
+			csv.addSample(sample_info_path, a1, "NasalSwabType");
+		} else if (SelfTest.isSelected() && (patientID_SampleCreation != null) && !patientID_SampleCreation.getText().equals("")) {
+			SelfTestCovidSampleType a2 = new SelfTestCovidSampleType();
+			a2.generateSampleID();
+			a2.setPatientID(Integer.parseInt(patientID_SampleCreation.getText()));
+			csv.addSample(sample_info_path, a2, "SelfTestCovidSampleType");
+		} else if (Other.isSelected() && (patientID_SampleCreation != null) && !patientID_SampleCreation.getText().equals("")) {
+			OtherCovidSampleType a3 = new OtherCovidSampleType();
+			a3.generateSampleID();
+			a3.setPatientID(Integer.parseInt(patientID_SampleCreation.getText()));
+			csv.addSample(sample_info_path, a3, "Other");
 		}
+		
 	}
 	
 }

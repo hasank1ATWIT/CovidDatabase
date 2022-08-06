@@ -35,5 +35,7 @@
       <Label fx:id="state" layoutX="426.0" layoutY="65.0" />
       <Label fx:id="test_result" layoutX="426.0" layoutY="128.0" />
       <Label fx:id="OtherPatients" layoutX="39.0" layoutY="236.0" />
+      <Label layoutX="426.0" layoutY="153.0" text="Latest Test Type" />
+      <Label fx:id="test_type" layoutX="426.0" layoutY="174.0" />
    </children>
 </AnchorPane>

@@ -45,7 +45,6 @@ public class CSV_Module {
 		}
 	}
 
-	
 	public static void updatePatient(String path, Patient a1) {
 		ArrayList<String> entire_file = new ArrayList<String>();
 		
@@ -83,6 +82,7 @@ public class CSV_Module {
 	}
 	
 	public static ArrayList<String> getSamples(String path) {
+		// Reads all of the samples from sample_info csv file and returns array list
 		ArrayList<String> sample_lines = new ArrayList<String>();
 		try (Scanner fin = new Scanner(new File(path))) {
 			while(fin.hasNextLine()) {
@@ -97,11 +97,18 @@ public class CSV_Module {
 		return sample_lines;
 	}
 	
-	public static void addSample(String path, Sample a1) {
+	public static void addSample(String path, Sample a1, String sample_type) {
+		// Adds a sample entry to sample info csv file
 		try {
 			File file = new File(path);
 			FileWriter fr = new FileWriter(file, true);
-			fr.write(a1.getSampleID() +", "+ a1.getPatientID() + ", " + a1.getSampleResult() +"\n");
+			if (sample_type == "NasalSwabSampleType") {
+				fr.write(a1.getSampleID() +", "+ a1.getPatientID() + ", " + a1.getSampleResult() + ", " + "Nasal Swab" + "\n");
+			} else if (sample_type == "SelfTestCovidSampleType") {
+				fr.write(a1.getSampleID() +", "+ a1.getPatientID() + ", " + a1.getSampleResult() + ", " + "Self Test" + "\n");
+			} else {
+				fr.write(a1.getSampleID() +", "+ a1.getPatientID() + ", " + a1.getSampleResult() + ", " + "Other" + "\n");
+			}
 			fr.close();
 			JOptionPane.showMessageDialog(null, "Sample Added");
 		} catch (FileNotFoundException ex) {
@@ -113,41 +120,8 @@ public class CSV_Module {
 		}
 	}
 	
-	public static void updateSampleOLD(String path, Sample a1) {
-		ArrayList<String> entire_file = new ArrayList<String>();
-		try (Scanner fin = new Scanner(new File(path))) {
-			while (fin.hasNextLine()) {
-				// Add each line to entire file array
-				String line = fin.nextLine();
-				entire_file.add(line);
-				
-				// Check each line to see if patient ID matches
-				List<String> patient_details = Arrays.asList(line.split(", "));
-				if (a1.getPatientID() == Integer.parseInt(patient_details.get(2))) {
-					entire_file.remove(line);
-				}
-				
-			}
-		} catch (FileNotFoundException ex) {
-			JOptionPane.showMessageDialog(null, "Error! Cannot find database!");
-			System.exit(0);
-		}
-		
-		// Rewrite entire file
-		try (PrintWriter fout = new PrintWriter(new File(path))) {
-			for(int i=0; i<entire_file.size(); i++) {
-				fout.println(entire_file.get(i));
-			}
-			
-		} catch (FileNotFoundException ex) {
-			JOptionPane.showMessageDialog(null, "Error! Cannot find database!");
-			System.exit(0);
-		}
-		
-		addSample(path, a1);
-	}
-	
 	public static int generatePatientID(String path) {
+		// Reads through patient info csv file to find largest patient ID number and adds 1
 		ArrayList<String> patients = getPatients(path);
 		ArrayList<Integer> patient_id = new ArrayList<Integer>();
 		for(int i=0; i<patients.size(); i++) {
@@ -159,6 +133,7 @@ public class CSV_Module {
 	}
 	
 	public static int generateSampleID(String path) {
+		// Reads through sample info csv file to find largest sample ID number and adds 1
 		ArrayList<String> samples = getSamples(path);
 		ArrayList<Integer> sample_ids = new ArrayList<Integer>();
 		for(int i=0; i<samples.size(); i++) {
@@ -171,6 +146,7 @@ public class CSV_Module {
 	}
 	
 	public static void addPatientToPatientResults(String path, ArrayList<String> patients) {
+		// Overwrites the entire csv file to add relevant patient
 		try(PrintWriter fout = new PrintWriter(new File(path))) {
 			for(int i=0; i<patients.size(); i++) {
 				fout.println(patients.get(i));
@@ -182,6 +158,7 @@ public class CSV_Module {
 	}
 	
 	public static ArrayList<String> readPatientFromPatientResults(String path) {
+		// Reads through entire csv file and appends to array list
 		ArrayList<String> patient_results = new ArrayList<String>();
 		try(Scanner fin = new Scanner(new File(path))) {
 			while(fin.hasNextLine()) {
@@ -196,6 +173,8 @@ public class CSV_Module {
 	}
 	
 	public static void updateSample(String path, int patient_id, String result) { 
+		// Reads and stores entire file into array list, deletes the array list element that needs to be updated, adds
+		// the array list element with the updated information and over writes the entire csv file
 		ArrayList<String> entire_file = new ArrayList<String>();
 		try (Scanner fin = new Scanner(new File(path))) {
 			while (fin.hasNextLine()) {
@@ -214,27 +193,28 @@ public class CSV_Module {
 			String sample_line = entire_file.get(i);
 			String[] sample_details = sample_line.split(", ");
 			String sample_id = sample_details[0]; // Gets the sample ID
+			String sample_type = sample_details[3];
 			
 			// If patient ID from patient info csv equals patient ID from sample info csv, then remove that line and add another
 			if (sample_details[1].equals(Integer.toString(patient_id))) {
 				entire_file.remove(i);
-				entire_file.add(sample_id + ", " + patient_id + ", " + result);
+				entire_file.add(sample_id + ", " + patient_id + ", " + result + ", " + sample_type);
 			}
 			
 			
 		}
 		
 		// Rewrite the entire file
-				try (PrintWriter fout = new PrintWriter(new File(path))) {
-					for(int i=0; i<entire_file.size(); i++) {
-						fout.println(entire_file.get(i));
-						JOptionPane.showMessageDialog(null, "Database Updated");
-					}
-					
-				} catch (FileNotFoundException ex) {
-					JOptionPane.showMessageDialog(null, "Error! Cannot find database!");
-					System.exit(0);
-				}
+		try (PrintWriter fout = new PrintWriter(new File(path))) {
+			for(int i=0; i<entire_file.size(); i++) {
+				fout.println(entire_file.get(i));
+				JOptionPane.showMessageDialog(null, "Database Updated");
+			}
+			
+		} catch (FileNotFoundException ex) {
+			JOptionPane.showMessageDialog(null, "Error! Cannot update database!");
+			System.exit(0);
+		}
 		
 	}
 	
