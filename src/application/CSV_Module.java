@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 
 public class CSV_Module {
 	public static ArrayList<String> getPatients(String path) {
+		// Reads entire csv file and stores it into an array list. The array list is then returned
 		ArrayList<String> file_lines = new ArrayList<String>();
 		try (Scanner fin = new Scanner(new File(path))) {
 			while(fin.hasNextLine()) {
@@ -29,6 +30,7 @@ public class CSV_Module {
 	}
 	
 	public static void addPatient(String path, Patient a1){
+		// Appends towards the bottom of the csv file 
 		try {
 			File file = new File(path);
 			FileWriter fr = new FileWriter(file, true);
@@ -46,6 +48,8 @@ public class CSV_Module {
 	}
 
 	public static void updatePatient(String path, Patient a1) {
+		// Reads entire patient info csv file into array list, finds the appropriate index, removes it, appends
+		// updated index to array list and over writes the entire file
 		ArrayList<String> entire_file = new ArrayList<String>();
 		
 		try (Scanner fin = new Scanner(new File(path))) {
@@ -129,7 +133,7 @@ public class CSV_Module {
 			String[] split_line = line.split(", ");
 			patient_id.add(Integer.parseInt(split_line[2]));
 		}
-		return Collections.max(patient_id) + 1;
+		return findMax(patient_id, patient_id.size()) + 1;
 	}
 	
 	public static int generateSampleID(String path) {
@@ -142,8 +146,16 @@ public class CSV_Module {
 			sample_ids.add(Integer.parseInt(split_line[0]));
 		}
 		
-		return Collections.max(sample_ids) + 1;
+		return findMax(sample_ids, sample_ids.size()) + 1;
 	}
+	
+	public static int findMax(ArrayList<Integer> nums, int n) {
+		// Recursive method to find maximum value from array list
+    	if(n == 1) {
+    		return nums.get(0);
+    	}
+    	return Math.max(nums.get(n-1), findMax(nums, n-1));
+	} 
 	
 	public static void addPatientToPatientResults(String path, ArrayList<String> patients) {
 		// Overwrites the entire csv file to add relevant patient
@@ -208,8 +220,8 @@ public class CSV_Module {
 		try (PrintWriter fout = new PrintWriter(new File(path))) {
 			for(int i=0; i<entire_file.size(); i++) {
 				fout.println(entire_file.get(i));
-				JOptionPane.showMessageDialog(null, "Database Updated");
 			}
+			JOptionPane.showMessageDialog(null, "Sample Updated");
 			
 		} catch (FileNotFoundException ex) {
 			JOptionPane.showMessageDialog(null, "Error! Cannot update database!");
@@ -218,12 +230,4 @@ public class CSV_Module {
 		
 	}
 	
-	public static void main(String[] args) {
-		String patient_info_path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project\\patient_info.csv";
-		String sample_info_path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project\\sample_info.csv";
-		String patient_results_path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project//patient_results.csv";
-		
-		System.out.println(generateSampleID(sample_info_path));
-	}
-
 }

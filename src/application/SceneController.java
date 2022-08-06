@@ -2,6 +2,7 @@ package application;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JOptionPane;
 
@@ -72,6 +73,7 @@ public class SceneController {
 		root = FXMLLoader.load(getClass().getResource("Scene1.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
+		stage.setTitle("Main Menu");
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -104,6 +106,7 @@ public class SceneController {
 		root = FXMLLoader.load(getClass().getResource("Scene2.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
+		stage.setTitle("Patient Screen");
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -114,7 +117,7 @@ public class SceneController {
 		CSV_Module csv = new CSV_Module();
 		ArrayList<String> relavant_patients = csv.readPatientFromPatientResults(patient_results_path);
 		ArrayList<String> all_samples = csv.getSamples(sample_info_path);
-		
+		Collections.reverse(all_samples);
 		
 		if(relavant_patients.size() > 0) {
 			String patient_string = relavant_patients.get(patient_index); 
@@ -155,6 +158,7 @@ public class SceneController {
 		root = FXMLLoader.load(getClass().getResource("CreatePatientScene.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
+		stage.setTitle("Create Patient");
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -185,6 +189,7 @@ public class SceneController {
 		root = FXMLLoader.load(getClass().getResource("updateSampleScene.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
+		stage.setTitle("Update Sample");
 		stage.setScene(scene);
 		stage.show();
 		
@@ -204,6 +209,7 @@ public class SceneController {
 		root = FXMLLoader.load(getClass().getResource("createSampleScene.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
+		stage.setTitle("Create Sample");
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -216,7 +222,7 @@ public class SceneController {
 			NasalSwabSampleType a1 = new NasalSwabSampleType();
 			a1.generateSampleID();
 			a1.setPatientID(Integer.parseInt(patientID_SampleCreation.getText()));
-			csv.addSample(sample_info_path, a1, "NasalSwabType");
+			csv.addSample(sample_info_path, a1, "NasalSwabSampleType");
 		} else if (SelfTest.isSelected() && (patientID_SampleCreation != null) && !patientID_SampleCreation.getText().equals("")) {
 			SelfTestCovidSampleType a2 = new SelfTestCovidSampleType();
 			a2.generateSampleID();
