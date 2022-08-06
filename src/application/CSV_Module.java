@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Stack;
+
 import javax.swing.JOptionPane;
 
 public class CSV_Module {
@@ -35,7 +37,7 @@ public class CSV_Module {
 			File file = new File(path);
 			FileWriter fr = new FileWriter(file, true);
 			fr.write(a1.getFirstName() +", " + a1.getLastname() +", " + a1.getPatientID() + ", " + a1.getEmail() + ", " + 
-					a1.getPhoneNumber() + ", " + a1.getCity() + ", " + a1.getState() + ", " + a1.getSampleID() + "\n");
+					a1.getPhoneNumber() + ", " + a1.getCity() + ", " + a1.getState() + "\n");
 			fr.close();
 			JOptionPane.showMessageDialog(null, "Patient Created");
 		} catch (FileNotFoundException ex) {
@@ -151,17 +153,25 @@ public class CSV_Module {
 	
 	public static int findMax(ArrayList<Integer> nums, int n) {
 		// Recursive method to find maximum value from array list
-    	if(n == 1) {
-    		return nums.get(0);
-    	}
-    	return Math.max(nums.get(n-1), findMax(nums, n-1));
-	} 
+		if(n == 1) {
+			return nums.get(0);
+		}
+		return Math.max(nums.get(n-1), findMax(nums, n-1));
+		} 
 	
 	public static void addPatientToPatientResults(String path, ArrayList<String> patients) {
 		// Overwrites the entire csv file to add relevant patient
+		
+		// Converts array list to stack
+		Stack<String> relevant_patients = new Stack<String>();
+		for(int i=0; i<patients.size(); i++) {
+			relevant_patients.add(patients.get(i));
+		}
+		
+		// Writes each line from stack to relevant patient results file
 		try(PrintWriter fout = new PrintWriter(new File(path))) {
 			for(int i=0; i<patients.size(); i++) {
-				fout.println(patients.get(i));
+				fout.println(relevant_patients.pop());
 			}
 		} catch (FileNotFoundException ex) {
 			System.out.println("Error!");
@@ -198,6 +208,8 @@ public class CSV_Module {
 			JOptionPane.showMessageDialog(null, "Error! Cannot find database!");
 			System.exit(0);
 		}
+		
+		Collections.reverse(entire_file);
 		
 		
 		// Find patient ID and delete that index

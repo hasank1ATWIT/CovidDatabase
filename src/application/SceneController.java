@@ -134,10 +134,11 @@ public class SceneController {
 				String[] sample_details = sample_string.split(", ");
 				if(Integer.parseInt(sample_details[1]) == Integer.parseInt(patient_details[2])) { // If patient ID from sample array list equals relevant patient ID
 					test_result.setText(sample_details[2]); // Then set test result to such and such
-					test_type.setText(sample_details[3]);
+					test_type.setText(sample_details[3]); // Then set sample type to such and such
 					break;
 				} else {
 					test_result.setText("No Test on Record");
+					test_type.setText("");
 				}
 			}
 			
