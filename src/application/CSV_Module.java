@@ -32,7 +32,7 @@ public class CSV_Module {
 	}
 	
 	public static void addPatient(String path, Patient a1){
-		// Appends towards the bottom of the csv file 
+		// Appends patient to csv file 
 		try {
 			File file = new File(path);
 			FileWriter fr = new FileWriter(file, true);

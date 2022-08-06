@@ -9,12 +9,11 @@ public class Patient {
 	private String phone_number = "None";
 	private String city = "None";
 	private String state = "None";
-	private int sample_id = -1;
+	private String patient_info_path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project\\patient_info.csv";
 	
 	public Patient(String first_name, String last_name) {
-		// The object can be created using the patient's name and patient ID
+		// The object must be created using the patient's first and last name
 		CSV_Module csv = new CSV_Module();
-		String patient_info_path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project\\patient_info.csv";
 		
 		this.first_name = first_name;
 		this.last_name = last_name;
@@ -22,30 +21,32 @@ public class Patient {
 		this.phone_number = "None";
 		this.city = "None";
 		this.state = "None";
-		this.sample_id = -1;
 		patient_id = csv.generatePatientID(patient_info_path);
 	}
 	
 	public void defineEmail(String email) {
+		// Setter method to define patient's email
 		this.email = email;
 	}
 	
 	public void definePhone(String phone_number) {
+		// Setter method to define patient's phone number
 		this.phone_number = phone_number;
 	}
 	
 	public void defineResidence(String city, String state) {
-		// The patient's address is defined
+		// Setter method to define the patient's address
 		this.city = city;
 		this.state = state;
 	}
 	
 	public String getFirstName() {
-		// Returns patient name
+		// Returns patient first name
 		return first_name;
 	}
 	
 	public String getLastname() {
+		// Returns patient last name
 		return last_name;
 	}
 	
@@ -64,25 +65,13 @@ public class Patient {
 		return phone_number;
 	}
 	
-	public int getSampleID() {
-		// Returns patient's sample ID, otherwise -1 if not linked
-		if (sample_id == 0) {
-			return -1;
-		}
-		
-		return sample_id;
-	}
-	
-	public void linkToSample(int sample_id) {
-		// Links patient's sample ID to object
-		this.sample_id = sample_id;
-	}
-	
 	public String getCity() {
+		// Returns patient city
 		return city;
 	}
 	
 	public String getState() {
+		// Returns patient state
 		return state;
 	}
 	

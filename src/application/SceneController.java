@@ -19,13 +19,18 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class SceneController {
+	/*
+	 * Paths to all of the csv files with patient information, sample information,
+	 * and patient results when a search is done for them
+	 */
 	private static String patient_info_path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project\\patient_info.csv";
 	private static String sample_info_path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project\\sample_info.csv";
 	private static String patient_results_path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project//patient_results.csv";
 	
+	// When there are multiple patients with the same name, an index is used to keep track of which patient is being viewed
 	private static int patient_index = 0;
 	
-	//private static ArrayList<String> relavant_patients;
+	// Necessary parts for the GUI to function
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
@@ -68,7 +73,7 @@ public class SceneController {
 	
 	
 	public void switchToScene1(ActionEvent event) throws IOException {
-		// This button returns to the main screen
+		// This button returns the user to the main screen
 		
 		root = FXMLLoader.load(getClass().getResource("Scene1.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -81,6 +86,7 @@ public class SceneController {
 	
 	public void switchToScene2(ActionEvent event) throws IOException {
 		// This button searches the database for the patient and appends to relavant_patients array list
+		// Also takes the user to the patient results page
 		CSV_Module csv = new CSV_Module();
 		ArrayList<String> patients = csv.getPatients(patient_info_path); // Array list for all patients in csv file
 		ArrayList<String> relavant_patients = new ArrayList<String>();
@@ -166,7 +172,7 @@ public class SceneController {
 
 	
 	public void createPatient(ActionEvent event) throws IOException {
-		// Creates patient
+		// Creates patient and appends them to csv file
 		CSV_Module csv = new CSV_Module();
 		
 		if((firstNameC != null) & (lastNameC != null)) {
