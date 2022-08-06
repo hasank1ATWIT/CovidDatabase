@@ -15,6 +15,25 @@ import java.util.Stack;
 import javax.swing.JOptionPane;
 
 public class CSV_Module {
+	
+	public static String patientInfoPath() {
+		// Getter method for the path of patient_info csv file
+		String path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project\\patient_info.csv";
+		return path;
+	}
+	
+	public static String sampleInfoPath() {
+		// Getter method for the path of sample_info csv file
+		String path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project\\sample_info.csv";
+		return path;
+	}
+	
+	public static String relevantPatientPath() {
+		// Getter method for the path of relavant_patient csv file
+		String path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project//patient_results.csv";
+		return path;
+	}
+	
 	public static ArrayList<String> getPatients(String path) {
 		// Reads entire csv file and stores it into an array list. The array list is then returned
 		ArrayList<String> file_lines = new ArrayList<String>();
@@ -197,6 +216,7 @@ public class CSV_Module {
 	public static void updateSample(String path, int patient_id, String result) { 
 		// Reads and stores entire file into array list, deletes the array list element that needs to be updated, adds
 		// the array list element with the updated information and over writes the entire csv file
+		boolean fail = true;
 		ArrayList<String> entire_file = new ArrayList<String>();
 		try (Scanner fin = new Scanner(new File(path))) {
 			while (fin.hasNextLine()) {
@@ -223,9 +243,14 @@ public class CSV_Module {
 			if (sample_details[1].equals(Integer.toString(patient_id))) {
 				entire_file.remove(i);
 				entire_file.add(sample_id + ", " + patient_id + ", " + result + ", " + sample_type);
-			}
+				fail = false;
+			} 
 			
 			
+		}
+		
+		if (fail == true) {
+			JOptionPane.showMessageDialog(null, "Error! No valid samples to update!");
 		}
 		
 		// Rewrite the entire file

@@ -19,13 +19,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class SceneController {
-	/*
-	 * Paths to all of the csv files with patient information, sample information,
-	 * and patient results when a search is done for them
-	 */
-	private static String patient_info_path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project\\patient_info.csv";
-	private static String sample_info_path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project\\sample_info.csv";
-	private static String patient_results_path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project//patient_results.csv";
 	
 	// When there are multiple patients with the same name, an index is used to keep track of which patient is being viewed
 	private static int patient_index = 0;
@@ -88,7 +81,7 @@ public class SceneController {
 		// This button searches the database for the patient and appends to relavant_patients array list
 		// Also takes the user to the patient results page
 		CSV_Module csv = new CSV_Module();
-		ArrayList<String> patients = csv.getPatients(patient_info_path); // Array list for all patients in csv file
+		ArrayList<String> patients = csv.getPatients(csv.patientInfoPath()); // Array list for all patients in csv file
 		ArrayList<String> relavant_patients = new ArrayList<String>();
 		
 		// Append patients who match the text input into relevant patients array list
@@ -107,7 +100,7 @@ public class SceneController {
 			JOptionPane.showMessageDialog(null, "No Patients with that name");
 		}
 		
-		csv.addPatientToPatientResults(patient_results_path, relavant_patients);
+		csv.addPatientToPatientResults(csv.relevantPatientPath(), relavant_patients);
 		
 		root = FXMLLoader.load(getClass().getResource("Scene2.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -121,8 +114,8 @@ public class SceneController {
 	public void loadPatientButton(ActionEvent event) throws IOException {
 		// This button will fill in all of the patient details
 		CSV_Module csv = new CSV_Module();
-		ArrayList<String> relavant_patients = csv.readPatientFromPatientResults(patient_results_path);
-		ArrayList<String> all_samples = csv.getSamples(sample_info_path);
+		ArrayList<String> relavant_patients = csv.readPatientFromPatientResults(csv.relevantPatientPath());
+		ArrayList<String> all_samples = csv.getSamples(csv.sampleInfoPath());
 		Collections.reverse(all_samples);
 		
 		if(relavant_patients.size() > 0) {
@@ -186,7 +179,7 @@ public class SceneController {
 			if((cityC != null) && !cityC.getText().equals("") & (stateC != null) && !stateC.getText().equals("")) {
 				a1.defineResidence(cityC.getText(), stateC.getText());
 			}
-			csv.addPatient(patient_info_path, a1);
+			csv.addPatient(csv.patientInfoPath(), a1);
 		}
 
 	}
@@ -207,7 +200,7 @@ public class SceneController {
 		// Updates the sample
 		CSV_Module csv = new CSV_Module();
 		if((patientIDS != null) & (sampleResultS != null)) {
-			csv.updateSample(sample_info_path, Integer.parseInt(patientIDS.getText()), sampleResultS.getText());
+			csv.updateSample(csv.sampleInfoPath(), Integer.parseInt(patientIDS.getText()), sampleResultS.getText());
 		}
 	}
 	
@@ -229,17 +222,17 @@ public class SceneController {
 			NasalSwabSampleType a1 = new NasalSwabSampleType();
 			a1.generateSampleID();
 			a1.setPatientID(Integer.parseInt(patientID_SampleCreation.getText()));
-			csv.addSample(sample_info_path, a1, "NasalSwabSampleType");
+			csv.addSample(csv.sampleInfoPath(), a1, "NasalSwabSampleType");
 		} else if (SelfTest.isSelected() && (patientID_SampleCreation != null) && !patientID_SampleCreation.getText().equals("")) {
 			SelfTestCovidSampleType a2 = new SelfTestCovidSampleType();
 			a2.generateSampleID();
 			a2.setPatientID(Integer.parseInt(patientID_SampleCreation.getText()));
-			csv.addSample(sample_info_path, a2, "SelfTestCovidSampleType");
+			csv.addSample(csv.sampleInfoPath(), a2, "SelfTestCovidSampleType");
 		} else if (Other.isSelected() && (patientID_SampleCreation != null) && !patientID_SampleCreation.getText().equals("")) {
 			OtherCovidSampleType a3 = new OtherCovidSampleType();
 			a3.generateSampleID();
 			a3.setPatientID(Integer.parseInt(patientID_SampleCreation.getText()));
-			csv.addSample(sample_info_path, a3, "Other");
+			csv.addSample(csv.sampleInfoPath(), a3, "Other");
 		}
 		
 	}

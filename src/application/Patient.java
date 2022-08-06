@@ -9,7 +9,6 @@ public class Patient {
 	private String phone_number = "None";
 	private String city = "None";
 	private String state = "None";
-	private String patient_info_path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project\\patient_info.csv";
 	
 	public Patient(String first_name, String last_name) {
 		// The object must be created using the patient's first and last name
@@ -21,7 +20,7 @@ public class Patient {
 		this.phone_number = "None";
 		this.city = "None";
 		this.state = "None";
-		patient_id = csv.generatePatientID(patient_info_path);
+		patient_id = csv.generatePatientID(csv.patientInfoPath());
 	}
 	
 	public void defineEmail(String email) {
