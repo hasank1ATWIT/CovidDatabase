@@ -15,23 +15,23 @@ import java.util.Stack;
 import javax.swing.JOptionPane;
 
 public class CSV_Module {
+	private String patient_info = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project\\patient_info.csv";
+	private String sample_info = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project\\sample_info.csv";
+	private String relevant_patients = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project//patient_results.csv";
 	
-	public static String patientInfoPath() {
+	public String patientInfoPath() {
 		// Getter method for the path of patient_info csv file
-		String path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project\\patient_info.csv";
-		return path;
+		return patient_info;
 	}
 	
-	public static String sampleInfoPath() {
+	public String sampleInfoPath() {
 		// Getter method for the path of sample_info csv file
-		String path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project\\sample_info.csv";
-		return path;
+		return sample_info;
 	}
 	
-	public static String relevantPatientPath() {
+	public String relevantPatientPath() {
 		// Getter method for the path of relavant_patient csv file
-		String path = "C:\\Users\\hasank1\\OneDrive - Wentworth Institute of Technology\\Backups\\Desktop\\Computer Science II\\Final Project//patient_results.csv";
-		return path;
+		return relevant_patients;
 	}
 	
 	public static ArrayList<String> getPatients(String path) {

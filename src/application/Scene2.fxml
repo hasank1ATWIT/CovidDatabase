@@ -12,7 +12,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button layoutX="209.0" layoutY="349.0" mnemonicParsing="false" onAction="#switchToScene1" text="Return to the Main Screen">
+      <Button layoutX="209.0" layoutY="349.0" mnemonicParsing="false" onAction="#switchToMainScreen" text="Return to the Main Screen">
          <font>
             <Font size="14.0" />
          </font>

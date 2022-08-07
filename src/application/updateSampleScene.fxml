@@ -13,11 +13,11 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="144.0" layoutY="49.0" text="Patient ID:" />
-      <TextField fx:id="patientIDS" layoutX="144.0" layoutY="77.0" />
-      <TextField fx:id="sampleResultS" layoutX="307.0" layoutY="77.0" />
-      <Label layoutX="307.0" layoutY="49.0" text="Sample Result:" />
-      <Button layoutX="252.0" layoutY="200.0" mnemonicParsing="false" onAction="#switchToScene1" text="Return to Main" />
-      <Button layoutX="251.0" layoutY="160.0" mnemonicParsing="false" onAction="#updateSample" text="Update Sample" />
+      <Label layoutX="144.0" layoutY="49.0" text="Patient ID: *" />
+      <TextField fx:id="patientIDSample" layoutX="144.0" layoutY="77.0" />
+      <TextField fx:id="sampleResult" layoutX="307.0" layoutY="77.0" />
+      <Label layoutX="307.0" layoutY="49.0" text="Sample Result: *" />
+      <Button layoutX="252.0" layoutY="200.0" mnemonicParsing="false" onAction="#switchToMainScreen" text="Return to Main" />
+      <Button layoutX="251.0" layoutY="160.0" mnemonicParsing="false" onAction="#updateSampleButton" text="Update Sample" />
    </children>
 </AnchorPane>

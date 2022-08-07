@@ -15,17 +15,17 @@
       </Label>
       <Label layoutX="14.0" layoutY="41.0" text="First Name *" />
       <Label layoutX="180.0" layoutY="41.0" text="Last Name *" />
-      <TextField fx:id="firstNameC" layoutX="14.0" layoutY="67.0" />
-      <TextField fx:id="lastNameC" layoutX="180.0" layoutY="67.0" />
+      <TextField fx:id="firstNameCreate" layoutX="14.0" layoutY="67.0" />
+      <TextField fx:id="lastNameCreate" layoutX="180.0" layoutY="67.0" />
       <Label layoutX="356.0" layoutY="41.0" text="Email" />
       <Label layoutX="14.0" layoutY="116.0" text="Phone Number" />
-      <TextField fx:id="emailC" layoutX="356.0" layoutY="67.0" />
-      <TextField fx:id="phoneC" layoutX="15.0" layoutY="141.0" />
-      <TextField fx:id="cityC" layoutX="181.0" layoutY="141.0" />
-      <TextField fx:id="stateC" layoutX="357.0" layoutY="141.0" />
+      <TextField fx:id="emailCreate" layoutX="356.0" layoutY="67.0" />
+      <TextField fx:id="phoneCreate" layoutX="15.0" layoutY="141.0" />
+      <TextField fx:id="cityCreate" layoutX="181.0" layoutY="141.0" />
+      <TextField fx:id="stateCreate" layoutX="357.0" layoutY="141.0" />
       <Label layoutX="181.0" layoutY="116.0" text="City" />
       <Label layoutX="356.0" layoutY="116.0" text="State" />
-      <Button layoutX="232.0" layoutY="329.0" mnemonicParsing="false" onAction="#switchToScene1" text="Return to Main Screen" />
-      <Button layoutX="253.0" layoutY="284.0" mnemonicParsing="false" onAction="#createPatient" text="Create Patient" />
+      <Button layoutX="232.0" layoutY="329.0" mnemonicParsing="false" onAction="#switchToMainScreen" text="Return to Main Screen" />
+      <Button layoutX="253.0" layoutY="284.0" mnemonicParsing="false" onAction="#createPatientButton" text="Create Patient" />
    </children>
 </AnchorPane>

@@ -23,17 +23,32 @@ public class SceneController {
 	// When there are multiple patients with the same name, an index is used to keep track of which patient is being viewed
 	private static int patient_index = 0;
 	
-	// Necessary parts for the GUI to function
+	// Stage, scene, and root
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
 	
+	// Text fields for searching for the patient
 	@FXML
-	TextField firstName, lastName, firstNameC, lastNameC, emailC, phoneC, cityC, stateC, patientIDS, sampleResultS, patientID_SampleCreation;
+	TextField firstNameSearch, lastNameSearch; 
 	
+	// Text fields for creating a patient
+	@FXML
+	TextField firstNameCreate, lastNameCreate, emailCreate, phoneCreate, cityCreate, stateCreate;
+	
+	// Text fields for updating a sample
+	@FXML
+	TextField patientIDSample, sampleResult;
+	
+	// Text field for creating a sample
+	@FXML
+	TextField patientIDSampleCreate;
+	
+	// The radio buttons are for selecting the test type when creating a covid test sample
 	@FXML
 	RadioButton NasalSwab, SelfTest, Other;
 	
+	// All of the labels are for the patient information scene
 	@FXML
 	Label first_name;
 	
@@ -65,9 +80,8 @@ public class SceneController {
 	Label test_type;
 	
 	
-	public void switchToScene1(ActionEvent event) throws IOException {
+	public void switchToMainScreen(ActionEvent event) throws IOException {
 		// This button returns the user to the main screen
-		
 		root = FXMLLoader.load(getClass().getResource("Scene1.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
@@ -77,7 +91,7 @@ public class SceneController {
 	}
 	
 	
-	public void switchToScene2(ActionEvent event) throws IOException {
+	public void switchToPatientScreen(ActionEvent event) throws IOException {
 		// This button searches the database for the patient and appends to relavant_patients array list
 		// Also takes the user to the patient results page
 		CSV_Module csv = new CSV_Module();
@@ -85,12 +99,12 @@ public class SceneController {
 		ArrayList<String> relavant_patients = new ArrayList<String>();
 		
 		// Append patients who match the text input into relevant patients array list
-		if((firstName != null) & (lastName != null)) {
+		if((firstNameSearch != null) & (lastNameSearch != null)) {
 			for(int i=0; i<patients.size(); i++) {
 				String line = patients.get(i);
 				String[] split_line = line.split(", ");
-				if(((split_line[0]).toLowerCase().equals(firstName.getText().toLowerCase())) 
-						& (split_line[1].toLowerCase().equals(lastName.getText().toLowerCase()))) {
+				if(((split_line[0]).toLowerCase().equals(firstNameSearch.getText().toLowerCase())) 
+						& (split_line[1].toLowerCase().equals(lastNameSearch.getText().toLowerCase()))) {
 					relavant_patients.add(line);
 				}
 			}
@@ -153,7 +167,7 @@ public class SceneController {
 	}
 
 	
-	public void createPatientButton(ActionEvent event) throws IOException {
+	public void switchToCreatePatientScreen(ActionEvent event) throws IOException {
 		// Button on main screen to take user to new patient creation scene
 		root = FXMLLoader.load(getClass().getResource("CreatePatientScene.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -164,27 +178,33 @@ public class SceneController {
 	}
 
 	
-	public void createPatient(ActionEvent event) throws IOException {
+	public void createPatientButton(ActionEvent event) throws IOException {
 		// Creates patient and appends them to csv file
 		CSV_Module csv = new CSV_Module();
-		
-		if((firstNameC != null) & (lastNameC != null)) {
-			Patient a1 = new Patient(firstNameC.getText(), lastNameC.getText());
-			if(emailC != null && !emailC.getText().equals("")) {
-				a1.defineEmail(emailC.getText());
+		boolean empty = true;
+		if((firstNameCreate != null) && (!firstNameCreate.getText().equals("")) && (lastNameCreate != null) && (!lastNameCreate.getText().equals(""))) {
+			empty = false;
+			Patient a1 = new Patient(firstNameCreate.getText(), lastNameCreate.getText());
+			if(emailCreate != null && !emailCreate.getText().equals("")) {
+				a1.defineEmail(emailCreate.getText());
 			}
-			if(phoneC != null && !phoneC.getText().equals("")) {
-				a1.definePhone(phoneC.getText());
+			if(phoneCreate != null && !phoneCreate.getText().equals("")) {
+				a1.definePhone(phoneCreate.getText());
 			}
-			if((cityC != null) && !cityC.getText().equals("") & (stateC != null) && !stateC.getText().equals("")) {
-				a1.defineResidence(cityC.getText(), stateC.getText());
+			if((cityCreate != null) && !cityCreate.getText().equals("") & (stateCreate != null) && !stateCreate.getText().equals("")) {
+				a1.defineResidence(cityCreate.getText(), stateCreate.getText());
 			}
 			csv.addPatient(csv.patientInfoPath(), a1);
+		}
+		
+		if(empty == true) {
+			JOptionPane.showMessageDialog(null, "Must enter a valid first and last name!");
 		}
 
 	}
 	
-	public void updateSampleButton(ActionEvent event) throws IOException {
+	
+	public void switchToSampleUpdateScreen(ActionEvent event) throws IOException {
 		// Goes to scene for updating sample status
 		root = FXMLLoader.load(getClass().getResource("updateSampleScene.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -196,15 +216,21 @@ public class SceneController {
 	}
 	
 	
-	public void updateSample(ActionEvent event) throws IOException {
+	public void updateSampleButton(ActionEvent event) throws IOException {
 		// Updates the sample
 		CSV_Module csv = new CSV_Module();
-		if((patientIDS != null) & (sampleResultS != null)) {
-			csv.updateSample(csv.sampleInfoPath(), Integer.parseInt(patientIDS.getText()), sampleResultS.getText());
+		boolean empty = true;
+		if((patientIDSample != null) && (!patientIDSample.getText().equals("")) && (sampleResult != null) && (!sampleResult.getText().equals(""))) {
+			empty = false;
+			csv.updateSample(csv.sampleInfoPath(), Integer.parseInt(patientIDSample.getText()), sampleResult.getText());
+		}
+		if(empty == true) {
+			JOptionPane.showMessageDialog(null, "Must enter a Patient ID and Sample Result!");
 		}
 	}
 	
-	public void createSample(ActionEvent event) throws IOException {
+	
+	public void switchToCreateSampleScene(ActionEvent event) throws IOException {
 		// Goes to scene for creating a sample
 		root = FXMLLoader.load(getClass().getResource("createSampleScene.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -214,25 +240,33 @@ public class SceneController {
 		stage.show();
 	}
 	
+	
 	public void createSampleButton(ActionEvent event) throws IOException {
 		// Creates a new sample with patient ID and sample type as inputs
 		CSV_Module csv = new CSV_Module();
-		
-		if((NasalSwab.isSelected()) && (patientID_SampleCreation != null) && !patientID_SampleCreation.getText().equals("")) {
+		boolean empty = true;
+		if((NasalSwab.isSelected()) && (patientIDSampleCreate != null) && !patientIDSampleCreate.getText().equals("")) {
+			empty = false;
 			NasalSwabSampleType a1 = new NasalSwabSampleType();
 			a1.generateSampleID();
-			a1.setPatientID(Integer.parseInt(patientID_SampleCreation.getText()));
+			a1.setPatientID(Integer.parseInt(patientIDSampleCreate.getText()));
 			csv.addSample(csv.sampleInfoPath(), a1, "NasalSwabSampleType");
-		} else if (SelfTest.isSelected() && (patientID_SampleCreation != null) && !patientID_SampleCreation.getText().equals("")) {
+		} else if (SelfTest.isSelected() && (patientIDSampleCreate != null) && !patientIDSampleCreate.getText().equals("")) {
+			empty = false;
 			SelfTestCovidSampleType a2 = new SelfTestCovidSampleType();
 			a2.generateSampleID();
-			a2.setPatientID(Integer.parseInt(patientID_SampleCreation.getText()));
+			a2.setPatientID(Integer.parseInt(patientIDSampleCreate.getText()));
 			csv.addSample(csv.sampleInfoPath(), a2, "SelfTestCovidSampleType");
-		} else if (Other.isSelected() && (patientID_SampleCreation != null) && !patientID_SampleCreation.getText().equals("")) {
+		} else if (Other.isSelected() && (patientIDSampleCreate != null) && !patientIDSampleCreate.getText().equals("")) {
+			empty = false;
 			OtherCovidSampleType a3 = new OtherCovidSampleType();
 			a3.generateSampleID();
-			a3.setPatientID(Integer.parseInt(patientID_SampleCreation.getText()));
+			a3.setPatientID(Integer.parseInt(patientIDSampleCreate.getText()));
 			csv.addSample(csv.sampleInfoPath(), a3, "Other");
+		}
+		
+		if(empty == true) {
+			JOptionPane.showMessageDialog(null, "Must enter a patient ID number and choose the test type!");
 		}
 		
 	}
